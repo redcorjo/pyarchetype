@@ -1,0 +1,18 @@
+# Editors
+.vscode/
+.idea/
+
+# Vagrant
+.vagrant/
+
+# Mac/OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+
+dist
+tmp
+.vscode
+.venv
+*.pyc
