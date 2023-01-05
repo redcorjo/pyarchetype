@@ -16,3 +16,5 @@ tmp
 .vscode
 .venv
 *.pyc
+src/pyarchetype.egg-info
+.pypirc
