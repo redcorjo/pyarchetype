@@ -1,10 +1,10 @@
 [project]
 name = "pyarchetype"
 version = "0.0.1"
+description = "Your tool to create the skeleton of python projects"
 authors = [
   { name="Jordi Redondo", email="jordipromotions@gmail.com" },
 ]
-description = "Your tool to create the skeleton of python projects"
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
@@ -20,4 +20,7 @@ classifiers = [
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[project.scripts]
+my-client = "pyarchetype.pyarchetype:main"
 
