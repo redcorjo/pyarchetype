@@ -4,12 +4,14 @@ import os
 import logging
 import sys
 import venv
+import importlib_metadata
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
 logger = logging.getLogger(__name__)
 
-VERSION = "0.0.4"
+
+__version__ = importlib_metadata.version("pyarchetype")
 
 class PyArchetype():
     
@@ -52,8 +54,8 @@ src/pyarchetype.egg-info
         self.create_Structure(path)
         
     def get_flags(self):
-        parser = argparse.ArgumentParser(prog="pyarchetype", description="Tool to create the skeleton of a python project")
-        parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + VERSION)
+        parser = argparse.ArgumentParser(prog="pyarchetype", description=f"Tool to create the skeleton of a python project. Version {__version__}")
+        parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
         parser.add_argument("--path", type=str, help="basedir", required=False, default=os.getcwd())
         parser.add_argument("--module", type=str, help="Module name . Default value is app", required=False, default="app")
         parser.add_argument("--force_overwrite", help="Force overwrite. Default value is false", required=False, action='store_true')
@@ -119,7 +121,7 @@ src/pyarchetype.egg-info
                 logger.info(f"Updating file {filename}")
                 output.write(data)
 def main():
-    logger.debug("PyArchetype")
+    logger.debug(f"PyArchetype. Version {__version__}")
     pyarchetype = PyArchetype()
     logger.debug("Done")   
 
