@@ -4,7 +4,7 @@ import logging
 import sys
 import venv
 import importlib_metadata
-import templates.templates as template_files
+#import templates.templates as template_files
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
@@ -16,7 +16,41 @@ __version__ = importlib_metadata.version("pyarchetype")
 
 class PyArchetype:
 
-    templates = template_files.templates
+    #templates = template_files.templates
+    templates = [
+    {
+        "path": ".gitignore",
+        "content": """
+# Editors
+.vscode/
+.idea/
+
+# Vagrant
+.vagrant/
+
+# Mac/OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+
+dist
+tmp
+.vscode
+.venv
+*.pyc
+src/pyarchetype.egg-info
+.pypirc
+ """,
+    },
+    {"path": "pyproject.toml", "content": ""},
+    {"path": "LICENSE", "content": ""},
+    {"path": "README.md", "content": ""},
+    {"path": "requests.txt", "content": ""},
+    {"path": "tmp"},
+    {"path": "scripts"},
+    {"path": "tests"},
+]
 
     def __init__(self):
         self.__settings = self.get_flags()
@@ -33,7 +67,7 @@ class PyArchetype:
             "-v", "--version", action="version", version="%(prog)s " + __version__
         )
         parser.add_argument(
-            "--path", type=str, help="basedir", required=False, default=os.getcwd()
+            "--path", type=str, help="basedir. Default current dir", required=False, default=os.getcwd()
         )
         parser.add_argument(
             "--module",
