@@ -1,6 +1,6 @@
 [project]
 name = "pyarchetype"
-version = "0.0.1"
+version = "0.0.2"
 description = "Your tool to create the skeleton of python projects"
 authors = [
   { name="Jordi Redondo", email="jordipromotions@gmail.com" },
@@ -22,5 +22,5 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-my-client = "pyarchetype.pyarchetype:main"
+pyarchetype = "pyarchetype.pyarchetype:main"
 
