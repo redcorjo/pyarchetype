@@ -3,6 +3,7 @@ import os
 import logging
 import sys
 import venv
+from jinja2 import Template
 import importlib_metadata
 try:
     from templates.templates import templates_files
@@ -121,7 +122,9 @@ if __name__ == "__main__":
         for item in self.templates:
             filename = os.path.join(path, item["path"])
             if "content" in item:
-                content = item["content"]
+                template = item["content"]
+                jinja_template = Template(template)
+                content = jinja_template.render(app="app", email="user@email.com", name="User")
                 self.__create_file(filename, content, force_overwrite=force_overwrite)
             else:
                 if not os.path.exists(filename):

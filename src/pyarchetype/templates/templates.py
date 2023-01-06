@@ -32,11 +32,11 @@ src/pyarchetype.egg-info
     },
     {"path": "pyproject.toml", "content": """
 [project]
-name = "app"
+name = "{{ app }}"
 version = "0.0.1"
-description = "Your dummy app"
+description = "Your dummy {{ app }}"
 authors = [
-  { name="user", email="user@email.com" },
+  { name="{{ name }}", email="{{ email }}" },
 ]
 readme = "README.md"
 requires-python = ">=3.7"
@@ -55,7 +55,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-pyarchetype = "app.app:main"
+pyarchetype = "{{ app }}.{{ app }}:main"
 """},
     {"path": "LICENSE", "content": ""},
     {"path": "README.md", "content": ""},
