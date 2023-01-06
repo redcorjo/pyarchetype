@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 
 logger.debug("Get templates")
 
-templates = [
+templates_files = [
     {
         "path": ".gitignore",
         "content": """

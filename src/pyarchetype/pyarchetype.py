@@ -4,6 +4,10 @@ import logging
 import sys
 import venv
 import importlib_metadata
+try:
+    from templates.templates import templates_files
+except:
+    from pyarchetype.templates.templates import templates_files
 #import templates.templates as template_files
 
 level = os.getenv("LOGGER", "INFO")
@@ -16,41 +20,41 @@ __version__ = importlib_metadata.version("pyarchetype")
 
 class PyArchetype:
 
-    #templates = template_files.templates
-    templates = [
-    {
-        "path": ".gitignore",
-        "content": """
-# Editors
-.vscode/
-.idea/
+    templates = templates_files
+#     templates = [
+#     {
+#         "path": ".gitignore",
+#         "content": """
+# # Editors
+# .vscode/
+# .idea/
 
-# Vagrant
-.vagrant/
+# # Vagrant
+# .vagrant/
 
-# Mac/OSX
-.DS_Store
+# # Mac/OSX
+# .DS_Store
 
-# Windows
-Thumbs.db
+# # Windows
+# Thumbs.db
 
-dist
-tmp
-.vscode
-.venv
-*.pyc
-src/pyarchetype.egg-info
-.pypirc
- """,
-    },
-    {"path": "pyproject.toml", "content": ""},
-    {"path": "LICENSE", "content": ""},
-    {"path": "README.md", "content": ""},
-    {"path": "requests.txt", "content": ""},
-    {"path": "tmp"},
-    {"path": "scripts"},
-    {"path": "tests"},
-]
+# dist
+# tmp
+# .vscode
+# .venv
+# *.pyc
+# src/pyarchetype.egg-info
+# .pypirc
+#  """,
+#     },
+#     {"path": "pyproject.toml", "content": ""},
+#     {"path": "LICENSE", "content": ""},
+#     {"path": "README.md", "content": ""},
+#     {"path": "requests.txt", "content": ""},
+#     {"path": "tmp"},
+#     {"path": "scripts"},
+#     {"path": "tests"},
+# ]
 
     def __init__(self):
         self.__settings = self.get_flags()
@@ -90,8 +94,8 @@ src/pyarchetype.egg-info
         )
         try:
             settings = parser.parse_args()
-        except:
-            parser.print_help()
+        except Exception as e:
+            #parser.print_help()
             sys.exit(1)
         logger.info(settings)
         return settings
