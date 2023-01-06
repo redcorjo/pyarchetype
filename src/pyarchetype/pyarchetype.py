@@ -3,12 +3,13 @@ import argparse
 import os
 import logging
 import sys
+import venv
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
 logger = logging.getLogger(__name__)
 
-VERSION = "0.0.3"
+VERSION = "0.0.4"
 
 class PyArchetype():
     
@@ -56,12 +57,13 @@ src/pyarchetype.egg-info
         parser.add_argument("--path", type=str, help="basedir", required=False, default=os.getcwd())
         parser.add_argument("--module", type=str, help="Module name . Default value is app", required=False, default="app")
         parser.add_argument("--force_overwrite", help="Force overwrite. Default value is false", required=False, action='store_true')
+        parser.add_argument("--create_venv", help="Create project virtualenv. Default value is false", required=False, action='store_true')
         try:
             settings = parser.parse_args()
         except:
             parser.print_help()
             sys.exit(1)
-        logger.debug(settings)
+        logger.info(settings)
         return settings
     
     def create_Structure(self, path):
@@ -71,8 +73,18 @@ src/pyarchetype.egg-info
             os.makedirs(path)
         else:
             logger.info(f"basedir {path} already exists")
+        if self.__settings.create_venv == True:
+            self.create_Virtual_Env(path)
         self.create_Main_Skeleton(path, force_overwrite=self.__settings.force_overwrite)
         self.create_Src_App(path)
+        return True
+    
+    def create_Virtual_Env(self, path):
+        my_venv = os.path.join(path, ".venv")
+        if not os.path.exists(my_venv) or self.__settings.force_overwrite == True:
+            logger.debug("Creating virtual env")
+            venv.create(my_venv, with_pip=True)
+            
         return True
     
     def create_Src_App(self, path):
