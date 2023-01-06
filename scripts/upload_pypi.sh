@@ -36,4 +36,6 @@ fi
 
 python -m pip install --upgrade dist/${PACKAGE}*whl
 
+pyarchetype -h
+
 exit
