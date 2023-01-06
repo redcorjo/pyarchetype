@@ -1,6 +1,6 @@
 [project]
 name = "pyarchetype"
-version = "0.0.9"
+version = "0.0.10"
 description = "Your tool to create the skeleton of python projects"
 authors = [
   { name="Jordi Redondo", email="jordipromotions@gmail.com" },
@@ -11,6 +11,9 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+]
+dependencies = [
+"Jinja2 >= 3.1.2"
 ]
 
 [project.urls]
