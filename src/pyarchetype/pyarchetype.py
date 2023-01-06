@@ -21,40 +21,6 @@ __version__ = importlib_metadata.version("pyarchetype")
 class PyArchetype:
 
     templates = templates_files
-#     templates = [
-#     {
-#         "path": ".gitignore",
-#         "content": """
-# # Editors
-# .vscode/
-# .idea/
-
-# # Vagrant
-# .vagrant/
-
-# # Mac/OSX
-# .DS_Store
-
-# # Windows
-# Thumbs.db
-
-# dist
-# tmp
-# .vscode
-# .venv
-# *.pyc
-# src/pyarchetype.egg-info
-# .pypirc
-#  """,
-#     },
-#     {"path": "pyproject.toml", "content": ""},
-#     {"path": "LICENSE", "content": ""},
-#     {"path": "README.md", "content": ""},
-#     {"path": "requests.txt", "content": ""},
-#     {"path": "tmp"},
-#     {"path": "scripts"},
-#     {"path": "tests"},
-# ]
 
     def __init__(self):
         self.__settings = self.get_flags()
@@ -127,6 +93,18 @@ class PyArchetype:
             os.makedirs(basedir)
         filename = os.path.join(basedir, self.__settings.module + ".py")
         data = """
+import logging, os
+
+level = os.getenv("LOGGER", "INFO")
+logging.basicConfig(level=level)
+logger = logging.getLogger(__name__)
+
+def main():
+    logger.debug("Main")
+    
+if __name__ == "__main__":
+    main()
+
         """
         self.__create_file(
             filename, data, force_overwrite=self.__settings.force_overwrite

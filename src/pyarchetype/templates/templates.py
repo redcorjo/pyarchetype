@@ -30,7 +30,33 @@ src/pyarchetype.egg-info
 .pypirc
  """,
     },
-    {"path": "pyproject.toml", "content": ""},
+    {"path": "pyproject.toml", "content": """
+[project]
+name = "app"
+version = "0.0.1"
+description = "Your dummy app"
+authors = [
+  { name="user", email="user@email.com" },
+]
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/user/app"
+"Bug Tracker" = "https://github.com/user/app/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+pyarchetype = "app.app:main"
+"""},
     {"path": "LICENSE", "content": ""},
     {"path": "README.md", "content": ""},
     {"path": "requests.txt", "content": ""},
