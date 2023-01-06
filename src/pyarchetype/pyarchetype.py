@@ -1,10 +1,10 @@
-
 import argparse
 import os
 import logging
 import sys
 import venv
 import importlib_metadata
+import templates.templates as template_files
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
@@ -13,53 +13,79 @@ logger = logging.getLogger(__name__)
 
 __version__ = importlib_metadata.version("pyarchetype")
 
-class PyArchetype():
-    
-    templates = [
-        {"path": ".gitignore", "content": """
-# Editors
-.vscode/
-.idea/
 
-# Vagrant
-.vagrant/
+class PyArchetype:
 
-# Mac/OSX
-.DS_Store
+    templates = template_files.templates
 
-# Windows
-Thumbs.db
+    #     templates2 = [
+    #         {"path": ".gitignore", "content": """
+    # # Editors
+    # .vscode/
+    # .idea/
 
-dist
-tmp
-.vscode
-.venv
-*.pyc
-src/pyarchetype.egg-info
-.pypirc
-         """},
-        {"path": "pyproject.toml", "content": ""},
-        {"path": "LICENSE", "content": ""},
-        {"path": "README.md", "content": ""},
-        {"path": "requests.txt", "content": ""},
-        {"path": "tmp"},
-        {"path": "scripts"},
-        {"path": "tests"}
-    ]
-    
+    # # Vagrant
+    # .vagrant/
+
+    # # Mac/OSX
+    # .DS_Store
+
+    # # Windows
+    # Thumbs.db
+
+    # dist
+    # tmp
+    # .vscode
+    # .venv
+    # *.pyc
+    # src/pyarchetype.egg-info
+    # .pypirc
+    #          """},
+    #         {"path": "pyproject.toml", "content": ""},
+    #         {"path": "LICENSE", "content": ""},
+    #         {"path": "README.md", "content": ""},
+    #         {"path": "requests.txt", "content": ""},
+    #         {"path": "tmp"},
+    #         {"path": "scripts"},
+    #         {"path": "tests"}
+    #     ]
+
     def __init__(self):
         self.__settings = self.get_flags()
         path = self.__settings.path
         logger.debug(f"Create structure at path {path}")
         self.create_Structure(path)
-        
+
     def get_flags(self):
-        parser = argparse.ArgumentParser(prog="pyarchetype", description=f"Tool to create the skeleton of a python project. Version {__version__}")
-        parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
-        parser.add_argument("--path", type=str, help="basedir", required=False, default=os.getcwd())
-        parser.add_argument("--module", type=str, help="Module name . Default value is app", required=False, default="app")
-        parser.add_argument("--force_overwrite", help="Force overwrite. Default value is false", required=False, action='store_true')
-        parser.add_argument("--create_venv", help="Create project virtualenv. Default value is false", required=False, action='store_true')
+        parser = argparse.ArgumentParser(
+            prog="pyarchetype",
+            description=f"Tool to create the skeleton of a python project. Version {__version__}",
+        )
+        parser.add_argument(
+            "-v", "--version", action="version", version="%(prog)s " + __version__
+        )
+        parser.add_argument(
+            "--path", type=str, help="basedir", required=False, default=os.getcwd()
+        )
+        parser.add_argument(
+            "--module",
+            type=str,
+            help="Module name . Default value is app",
+            required=False,
+            default="app",
+        )
+        parser.add_argument(
+            "--force_overwrite",
+            help="Force overwrite. Default value is false",
+            required=False,
+            action="store_true",
+        )
+        parser.add_argument(
+            "--create_venv",
+            help="Create project virtualenv. Default value is false",
+            required=False,
+            action="store_true",
+        )
         try:
             settings = parser.parse_args()
         except:
@@ -67,7 +93,7 @@ src/pyarchetype.egg-info
             sys.exit(1)
         logger.info(settings)
         return settings
-    
+
     def create_Structure(self, path):
         logger.debug(f"Creating skeleton at path {path}")
         if not os.path.exists(path):
@@ -80,29 +106,33 @@ src/pyarchetype.egg-info
         self.create_Main_Skeleton(path, force_overwrite=self.__settings.force_overwrite)
         self.create_Src_App(path)
         return True
-    
+
     def create_Virtual_Env(self, path):
         my_venv = os.path.join(path, ".venv")
         if not os.path.exists(my_venv) or self.__settings.force_overwrite == True:
             logger.debug("Creating virtual env")
             venv.create(my_venv, with_pip=True)
-            
+
         return True
-    
+
     def create_Src_App(self, path):
         basedir = os.path.join(path, "src", self.__settings.module)
         if not os.path.exists(basedir):
             os.makedirs(basedir)
-        filename = os.path.join(basedir,  self.__settings.module + ".py")
-        data="""
+        filename = os.path.join(basedir, self.__settings.module + ".py")
+        data = """
         """
-        self.__create_file(filename, data, force_overwrite=self.__settings.force_overwrite)
+        self.__create_file(
+            filename, data, force_overwrite=self.__settings.force_overwrite
+        )
         filename = os.path.join(basedir, "__init__.py")
-        data="""
+        data = """
         """
-        self.__create_file(filename, data, force_overwrite=self.__settings.force_overwrite)
+        self.__create_file(
+            filename, data, force_overwrite=self.__settings.force_overwrite
+        )
         return True
-    
+
     def create_Main_Skeleton(self, path, force_overwrite=False):
         for item in self.templates:
             filename = os.path.join(path, item["path"])
@@ -114,16 +144,19 @@ src/pyarchetype.egg-info
                     logger.info(f"Creating folder {filename}")
                     os.makedirs(filename)
         return True
-            
+
     def __create_file(self, filename, data, force_overwrite=False):
         if force_overwrite == True or not os.path.exists(filename):
-            with open(filename, 'w') as output:
+            with open(filename, "w") as output:
                 logger.info(f"Updating file {filename}")
                 output.write(data)
+
+
 def main():
     logger.debug(f"PyArchetype. Version {__version__}")
     pyarchetype = PyArchetype()
-    logger.debug("Done")   
+    logger.debug("Done")
+
 
 if __name__ == "__main__":
     main()
