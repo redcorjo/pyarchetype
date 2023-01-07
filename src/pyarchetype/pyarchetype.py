@@ -3,13 +3,14 @@ import os
 import logging
 import sys
 import venv
+import json
 from jinja2 import Template
 import importlib_metadata
+import getpass
 try:
-    from templates.templates import templates_files, header_info
+    from templates.templates import templates_files, header_info, license_templates
 except:
-    from pyarchetype.templates.templates import templates_files
-#import templates.templates as template_files
+    from pyarchetype.templates.templates import templates_files, header_info, license_templates
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
@@ -80,12 +81,13 @@ class PyArchetype:
             required=False,
             default="app",
         )
+        my_username = getpass.getuser()
         parser.add_argument(
             "--name",
             type=str,
-            help="Owner. Default value is user",
+            help=f"Owner. Default value is {my_username}",
             required=False,
-            default="user",
+            default=my_username,
         )
         parser.add_argument(
             "--email",
@@ -100,6 +102,15 @@ class PyArchetype:
             help="Initial Version. Default value is 0.0.1",
             required=False,
             default="0.0.1",
+        )
+        license_list_of_choices = ["MIT", "Apache-2.0", "GPL-3.0-only", "Propietary"]
+        parser.add_argument(
+            "--license",
+            type=str,
+            help="license. Default value is MIT",
+            required=False,
+            default="MIT",
+            choices=license_list_of_choices
         )
         parser.add_argument(
             "--force_overwrite",
@@ -122,7 +133,8 @@ class PyArchetype:
             parser.print_help()
         else:
             all_flags = vars(settings)
-            logger.info(f"all_flags={all_flags}")
+            all_flags_formatted = json.dumps(all_flags, indent=4)
+            logger.info(f"all_flags={all_flags_formatted}")
         return settings
 
     def create_structure(self, path):
@@ -184,16 +196,29 @@ if __name__ == "__main__":
         filename = os.path.join(basedir, "test_" + self.__settings.module + ".py")
         data = f"""# Test scripts
 {header_info}
+import unittest
 import logging, os
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
 logger = logging.getLogger(__name__)
 
+class Testing(unittest.TestCase):
+    def test_my_string(self):
+        a = 'stringA'
+        b = 'stringA'
+        self.assertEqual(a, b)
+
+    def test_my_boolean(self):
+        a = True
+        b = True
+        self.assertEqual(a, b)
+
 def main():
-    logger.debug("Main")
-    
-if __name__ == "__main__":
+    logger.info("Tests")
+    unittest.main()
+
+if __name__ == '__main__':
     main()
 
         """
@@ -207,9 +232,15 @@ if __name__ == "__main__":
             filename = os.path.join(path, item["path"])
             if "content" in item:
                 template = item["content"]
+                if "LICENSE" in item["path"]:
+                    try:
+                        template = license_templates[self.__settings.license]
+                    except Exception as e:
+                        logger.warning(f"Not found license template {self.__settings.license}. Error " + str(e))
                 jinja_template = Template(template)
                 template_variables={
                     "app": self.__settings.module,
+                    "license": self.__settings.license,
                     "initial_version": self.__settings.initial_version,
                     "email": self.__settings.email,
                     "name": self.__settings.name,
@@ -218,6 +249,13 @@ if __name__ == "__main__":
                 }
                 content = jinja_template.render(**template_variables)
                 self.__create_file(filename, content, force_overwrite=force_overwrite)
+                if "mode" in item:
+                    mode = item["mode"]
+                    logger.info(f"Force filename={filename} chmod={mode} . Only relevant for Unix-like platforms") 
+                    try:
+                        os.chmod(filename, int(mode, base=8))
+                    except Exception as e:
+                        logger.error(f"Error trying to force filename={filename} chmod={mode}. Error " + str(e))
             else:
                 if not os.path.exists(filename):
                     logger.info(f"Creating folder {filename}")

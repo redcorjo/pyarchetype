@@ -13,10 +13,11 @@ Tool to create the skeleton of a python project
 ```sh
 usage: pyarchetype [-h] [-v] [--create] [--wizard] [--path PATH]
                    [--module MODULE] [--name NAME] [--email EMAIL]
-                   [--initial_version INITIAL_VERSION] [--force_overwrite]
-                   [--create_venv]
+                   [--initial_version INITIAL_VERSION]
+                   [--license {MIT,Apache-2.0,GPL-3.0-only,Propietary}]
+                   [--force_overwrite] [--create_venv]
 
-Tool to create the skeleton of a python project. Version x.y.z
+Tool to create the skeleton of a python project. Version 0.1.0
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -25,10 +26,12 @@ optional arguments:
   --wizard              Define all parameters in wizard mode
   --path PATH           basedir. Default current dir
   --module MODULE       Module name . Default value is app
-  --name NAME           Owner. Default value is user
+  --name NAME           Owner. Default value is jordiredondo
   --email EMAIL         Email address. Default value is user@email.com
   --initial_version INITIAL_VERSION
                         Initial Version. Default value is 0.0.1
+  --license {MIT,Apache-2.0,GPL-3.0-only,Propietary}
+                        license. Default value is MIT
   --force_overwrite     Force overwrite. Default value is false
   --create_venv         Create project virtualenv. Default value is false
 ```
@@ -37,4 +40,4 @@ optional arguments:
 
 https://github.com/redcorjo/pyarchetype.git
 
-Version: 2023010700
+Version: 2023010701
