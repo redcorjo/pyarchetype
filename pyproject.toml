@@ -1,6 +1,6 @@
 [project]
 name = "pyarchetype"
-version = "0.0.10"
+version = "0.0.11"
 description = "Your tool to create the skeleton of python projects"
 authors = [
   { name="Jordi Redondo", email="jordipromotions@gmail.com" },
