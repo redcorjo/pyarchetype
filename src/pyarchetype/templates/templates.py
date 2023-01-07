@@ -39,7 +39,7 @@ templates_files = [
         }
     ]
 }
-"""
+""",
     },
     {
         "path": ".vscode/launch.json",
@@ -288,7 +288,10 @@ python -m pip install --upgrade dist/${PACKAGE}*whl
 exit
 """,
     },
-    {"path": ".pypirc", "mode": "0600", "content": """
+    {
+        "path": ".pypirc",
+        "mode": "0600",
+        "content": """
 [distutils]
 index-servers =
     pypi
@@ -303,12 +306,12 @@ repository = https://upload.pypi.org/legacy/
 repository = https://test.pypi.org/legacy/
 #username = __token__
 #password = <PyPI token>
-"""    },
+""",
+    },
     {"path": "tmp"},
     {"path": "scripts"},
     {"path": "tests"},
 ]
-
 
 
 license_templates = {
@@ -1216,5 +1219,5 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
-    """
+    """,
 }

@@ -7,10 +7,15 @@ import json
 from jinja2 import Template
 import importlib_metadata
 import getpass
+
 try:
     from templates.templates import templates_files, header_info, license_templates
 except:
-    from pyarchetype.templates.templates import templates_files, header_info, license_templates
+    from pyarchetype.templates.templates import (
+        templates_files,
+        header_info,
+        license_templates,
+    )
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)
@@ -40,7 +45,9 @@ class PyArchetype:
         settings = vars(self.__settings)
         for key, value in settings.items():
             if key != "wizard":
-                new_value = str ( input(f"value for {key}. Default value is {value}:  ") or value )
+                new_value = str(
+                    input(f"value for {key}. Default value is {value}:  ") or value
+                )
                 if isinstance(value, bool):
                     if new_value in ("True", "true", "TRUE", 1):
                         new_value = True
@@ -72,7 +79,11 @@ class PyArchetype:
             action="store_true",
         )
         parser.add_argument(
-            "--path", type=str, help="basedir. Default current dir", required=False, default=os.getcwd()
+            "--path",
+            type=str,
+            help="basedir. Default current dir",
+            required=False,
+            default=os.getcwd(),
         )
         parser.add_argument(
             "--module",
@@ -110,7 +121,7 @@ class PyArchetype:
             help="license. Default value is MIT",
             required=False,
             default="MIT",
-            choices=license_list_of_choices
+            choices=license_list_of_choices,
         )
         parser.add_argument(
             "--force_overwrite",
@@ -127,7 +138,7 @@ class PyArchetype:
         try:
             settings = parser.parse_args()
         except Exception as e:
-            #parser.print_help()
+            # parser.print_help()
             sys.exit(1)
         if settings.create == False:
             parser.print_help()
@@ -236,26 +247,34 @@ if __name__ == '__main__':
                     try:
                         template = license_templates[self.__settings.license]
                     except Exception as e:
-                        logger.warning(f"Not found license template {self.__settings.license}. Error " + str(e))
+                        logger.warning(
+                            f"Not found license template {self.__settings.license}. Error "
+                            + str(e)
+                        )
                 jinja_template = Template(template)
-                template_variables={
+                template_variables = {
                     "app": self.__settings.module,
                     "license": self.__settings.license,
                     "initial_version": self.__settings.initial_version,
                     "email": self.__settings.email,
                     "name": self.__settings.name,
                     "python_version": f"{sys.version_info.major}.{sys.version_info.minor}",
-                    "header_info": header_info
+                    "header_info": header_info,
                 }
                 content = jinja_template.render(**template_variables)
                 self.__create_file(filename, content, force_overwrite=force_overwrite)
                 if "mode" in item:
                     mode = item["mode"]
-                    logger.info(f"Force filename={filename} chmod={mode} . Only relevant for Unix-like platforms") 
+                    logger.info(
+                        f"Force filename={filename} chmod={mode} . Only relevant for Unix-like platforms"
+                    )
                     try:
                         os.chmod(filename, int(mode, base=8))
                     except Exception as e:
-                        logger.error(f"Error trying to force filename={filename} chmod={mode}. Error " + str(e))
+                        logger.error(
+                            f"Error trying to force filename={filename} chmod={mode}. Error "
+                            + str(e)
+                        )
             else:
                 if not os.path.exists(filename):
                     logger.info(f"Creating folder {filename}")
