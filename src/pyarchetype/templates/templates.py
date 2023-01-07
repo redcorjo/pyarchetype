@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 
 logger.debug("Get templates")
 
-header_info = """# Produced by pyarchetype template
+header_info = """# Generated using pyarchetype template
 # pip install pyarchetype
 # git clone https://github.com/redcorjo/pyarchetype.git"""
 
