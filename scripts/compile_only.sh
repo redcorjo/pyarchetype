@@ -34,7 +34,7 @@ python -m build
 #     twine upload dist/*
 # fi
 
-python -m pip install --upgrade dist/${PACKAGE}*whl
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
 pyarchetype -h
 

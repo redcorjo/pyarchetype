@@ -181,7 +181,7 @@ Version: {{initial_version}}
 BASE_DIR=$(dirname $0)/..
 TWINE_CONFIG=$(dirname $0)/../.pypirc
 PYTHON=python{{python_version}}
-PACKAGE=pyarchetype
+PACKAGE={{app}}
 
 cd ${BASE_DIR}
 
@@ -212,7 +212,7 @@ else
     twine upload dist/*
 fi
 
-python -m pip install --upgrade dist/${PACKAGE}*whl
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
 #{{ app }} -h
 
@@ -229,7 +229,7 @@ exit
 BASE_DIR=$(dirname $0)/..
 TWINE_CONFIG=$(dirname $0)/../.pypirc
 PYTHON=python{{python_version}}
-PACKAGE=pyarchetype
+PACKAGE={{app}}
 
 cd ${BASE_DIR}
 
@@ -251,7 +251,7 @@ fi
 echo "Build"
 python -m build
 
-python -m pip install --upgrade dist/${PACKAGE}*whl
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
 #{{app}} -h
 
@@ -268,7 +268,7 @@ exit
 BASE_DIR=$(dirname $0)/..
 TWINE_CONFIG=$(dirname $0)/../.pypirc
 PYTHON=python{{ python_version }}
-PACKAGE=pyarchetype
+PACKAGE={{app}}
 
 cd ${BASE_DIR}
 
@@ -281,7 +281,7 @@ else
     twine upload dist/*
 fi
 
-python -m pip install --upgrade dist/${PACKAGE}*whl
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
 #{{ app }} -h
 
