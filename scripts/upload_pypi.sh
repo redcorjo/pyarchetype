@@ -7,6 +7,14 @@ PACKAGE=pyarchetype
 
 cd ${BASE_DIR}
 
+echo Reinstall module
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
+
+echo Run tests
+python tests/test_cli.py
+
+pyarchetype -h
+
 echo "Upload to pypi"
 if test -e ${TWINE_CONFIG}
 then
@@ -15,9 +23,5 @@ then
 else
     twine upload dist/*
 fi
-
-python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
-
-pyarchetype -h
 
 exit

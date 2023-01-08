@@ -34,8 +34,13 @@ python -m build
 #     twine upload dist/*
 # fi
 
+echo Reinstall module
 python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
+echo Run tests
+python tests/test_cli.py
+
+echo Run help
 pyarchetype -h
 
 exit

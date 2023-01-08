@@ -171,7 +171,7 @@ class PyArchetype:
         return True
 
     def create_src_app(self, path):
-        basedir = os.path.join(path, "src", self.__settings.module)
+        basedir = os.path.join(path, "src")
         if not os.path.exists(basedir):
             os.makedirs(basedir)
         filename = os.path.join(basedir, self.__settings.module + ".py")
@@ -201,7 +201,7 @@ if __name__ == "__main__":
         return True
 
     def create_test_app(self, path):
-        basedir = os.path.join(path, "tests", self.__settings.module)
+        basedir = os.path.join(path, "tests")
         if not os.path.exists(basedir):
             os.makedirs(basedir)
         filename = os.path.join(basedir, "test_" + self.__settings.module + ".py")
@@ -209,6 +209,7 @@ if __name__ == "__main__":
 {header_info}
 import unittest
 import logging, os
+#import {self.__settings.module}
 
 level = os.getenv("LOGGER", "INFO")
 logging.basicConfig(level=level)

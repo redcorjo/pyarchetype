@@ -25,6 +25,12 @@ fi
 echo "Build"
 python -m build
 
+echo Reinstall module
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
+
+echo Run tests
+python tests/test_cli.py
+
 echo "Upload to pypi"
 if test -e ${TWINE_CONFIG}
 then
@@ -33,8 +39,6 @@ then
 else
     twine upload dist/*
 fi
-
-python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
 pyarchetype -h
 

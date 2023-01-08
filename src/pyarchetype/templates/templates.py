@@ -125,7 +125,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-pyarchetype = "{{ app }}.{{ app }}:main"
+pyarchetype = "{{ app }}:main"
 """,
     },
     {
@@ -203,6 +203,14 @@ fi
 echo "Build"
 python -m build
 
+echo Reinstall module
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
+
+#echo Run tests
+#python tests/test_{{app}}.py
+
+#{{ app }} -h
+
 echo "Upload to pypi"
 if test -e ${TWINE_CONFIG}
 then
@@ -213,8 +221,6 @@ else
 fi
 
 python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
-
-#{{ app }} -h
 
 exit
 """,
@@ -251,9 +257,13 @@ fi
 echo "Build"
 python -m build
 
+echo Reinstall module
 python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 
-#{{app}} -h
+#echo Run tests
+#python tests/test_{{app}}.py
+
+#{{ app }} -h
 
 exit
 """,
@@ -272,6 +282,14 @@ PACKAGE={{app}}
 
 cd ${BASE_DIR}
 
+echo Reinstall module
+python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
+
+#echo Run tests
+#python tests/test_{{app}}.py
+
+#{{ app }} -h
+
 echo "Upload to pypi"
 if test -e ${TWINE_CONFIG}
 then
@@ -280,10 +298,6 @@ then
 else
     twine upload dist/*
 fi
-
-python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
-
-#{{ app }} -h
 
 exit
 """,
