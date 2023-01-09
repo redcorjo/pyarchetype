@@ -1,6 +1,6 @@
 [project]
 name = "pyarchetype"
-version = "0.1.5"
+version = "0.1.6"
 description = "Your tool to create the skeleton of python projects"
 authors = [
   { name="Jordi Redondo", email="jordipromotions@gmail.com" },
@@ -13,7 +13,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-"Jinja2 >= 3.1.2"
+"Jinja2 >= 3.1.2",
+"importlib-metadata==6.0.0"
 ]
 
 [project.urls]
