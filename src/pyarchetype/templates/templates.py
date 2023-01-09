@@ -54,7 +54,7 @@ templates_files = [
             "name": "Python: {{app}} main File",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/{{ app }}/{{ app }}.py",
+            "program": "${workspaceFolder}/src/{{ app }}.py",
             "args": [],
             "console": "integratedTerminal",
             "justMyCode": true
