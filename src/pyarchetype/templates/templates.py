@@ -63,15 +63,6 @@ templates_files = [
             "name": "Python: {{app}} module main File",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/{{app}}/{{ app }}.py",
-            "args": [],
-            "console": "integratedTerminal",
-            "justMyCode": true
-        },
-        {
-            "name": "Python: {{app}} module main File",
-            "type": "python",
-            "request": "launch",
             "cwd": "${workspaceFolder}",
             "module": "src.{{app}}.{{app}}",
             "args": [],
@@ -237,6 +228,8 @@ else
     source ${BASE_DIR}/.venv/bin/activate
 fi
 
+python -m build 2>/dev/null >/dev/null || python -m pip install --upgrade pip build
+
 echo "Build"
 python -m build
 
@@ -291,6 +284,8 @@ else
     source ${BASE_DIR}/.venv/bin/activate
 fi
 
+python -m build 2>/dev/null >/dev/null || python -m pip install --upgrade pip build
+
 echo "Build"
 python -m build
 
@@ -318,6 +313,8 @@ PYTHON=python{{ python_version }}
 PACKAGE={{app}}
 
 cd ${BASE_DIR}
+
+python -m build 2>/dev/null >/dev/null || python -m pip install --upgrade pip build
 
 echo Reinstall module
 python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl

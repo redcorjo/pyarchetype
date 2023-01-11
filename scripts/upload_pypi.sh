@@ -7,6 +7,8 @@ PACKAGE=pyarchetype
 
 cd ${BASE_DIR}
 
+python -m build 2>/dev/null >/dev/null || python -m pip install --upgrade pip build
+
 echo Reinstall module
 python -m pip install --upgrade --force-reinstall dist/${PACKAGE}*whl
 

@@ -22,6 +22,8 @@ else
     source ${BASE_DIR}/.venv/bin/activate
 fi
 
+python -m build 2>/dev/null >/dev/null || python -m pip install --upgrade pip build
+
 echo "Build"
 python -m build
 
