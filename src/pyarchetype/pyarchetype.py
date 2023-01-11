@@ -174,7 +174,6 @@ class PyArchetype:
         basedir = os.path.join(path, "src")
         if not os.path.exists(basedir):
             os.makedirs(basedir)
-        filename = os.path.join(basedir, self.__settings.module + ".py")
         data = f"""{header_info}
 import logging, os
 
@@ -189,10 +188,11 @@ if __name__ == "__main__":
     main()
 
         """
+        filename = os.path.join(basedir, self.__settings.module, self.__settings.module + ".py")
         self.__create_file(
             filename, data, force_overwrite=self.__settings.force_overwrite
         )
-        filename = os.path.join(basedir, "__init__.py")
+        filename = os.path.join(basedir, self.__settings.module, "__init__.py")
         data = """
         """
         self.__create_file(

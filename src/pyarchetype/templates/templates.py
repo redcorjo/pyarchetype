@@ -54,7 +54,26 @@ templates_files = [
             "name": "Python: {{app}} main File",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/{{ app }}.py",
+            "program": "${workspaceFolder}/src/main.py",
+            "args": [],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: {{app}} module main File",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/{{app}}/{{ app }}.py",
+            "args": [],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: {{app}} module main File",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "module": "src.{{app}}.{{app}}",
             "args": [],
             "console": "integratedTerminal",
             "justMyCode": true
@@ -125,7 +144,25 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-pyarchetype = "{{ app }}:main"
+pyarchetype = "{{ app }}.{{ app }}:main"
+""",
+    },
+    {
+        "path": "src/main.py",
+        "content": """{{header_info}}
+import logging, os
+import {{app}}
+
+level = os.getenv("LOGGER", "INFO")
+logging.basicConfig(level=level)
+logger = logging.getLogger(__name__)
+
+def main():
+    logger.debug("Main")
+    
+if __name__ == "__main__":
+    main()
+
 """,
     },
     {
