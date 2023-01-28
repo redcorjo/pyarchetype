@@ -56,6 +56,7 @@ templates_files = [
             "request": "launch",
             "program": "${workspaceFolder}/src/main.py",
             "args": [],
+            "env": {},
             "console": "integratedTerminal",
             "justMyCode": true
         },
@@ -66,6 +67,7 @@ templates_files = [
             "cwd": "${workspaceFolder}",
             "module": "src.{{app}}.{{app}}",
             "args": [],
+            "env": {},
             "console": "integratedTerminal",
             "justMyCode": true
         },
@@ -74,6 +76,7 @@ templates_files = [
             "type": "python",
             "request": "launch",
             "program": "${file}",
+            "env": {},
             "console": "integratedTerminal",
             "justMyCode": true
         }
@@ -124,6 +127,8 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: {{ license }} License",
     "Operating System :: OS Independent",
+]
+dependencies = [
 ]
 
 [project.urls]
