@@ -140,7 +140,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-pyarchetype = "{{ app }}.{{ app }}:main"
+{{ app }} = "{{ app }}.{{ app }}:main"
 """,
     },
     {
